@@ -1,20 +1,20 @@
 <h1 align="center">BAGEN</h1>
-<h3 align="center"><em>Budget-aware evaluation and training for long-horizon agents.</em></h3>
+<h3 align="center"><em>Are LLM agents budget-aware?</em></h3>
+
+<p align="center"><img src="public/BAGEN_logo.png" width="260px" alt="BAGEN logo" /></p>
 
 <p align="center">
-  <strong>BAGEN</strong> studies whether foundation-model agents know what they
-  will spend before they finish a task.
+  <strong>BAGEN</strong> studies whether reasoning agents can estimate future token, time, money, and storage budgets before they finish a task.
 </p>
 <p align="center">
-  It provides rollout logging, offline budget-estimation benchmarks, and SFT/RL
-  utilities for training budget-aware agents.
+  It provides rollout logging, offline budget-estimation benchmarks, experiment trajectories, and SFT/RL utilities for training budget-aware agents.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.12">
-  <img src="https://img.shields.io/badge/Built_on-RAGEN%20%2B%20verl-111827?style=for-the-badge" alt="Built on RAGEN and verl">
-  <img src="https://img.shields.io/badge/Tasks-Sokoban%20%7C%20Search--R1%20%7C%20SWE--bench%20%7C%20Warehouse-0F766E?style=for-the-badge" alt="Tasks">
-  <img src="https://img.shields.io/badge/API_Eval-OpenAI%20%7C%20Anthropic%20%7C%20OpenRouter%20%7C%20Gemini-7C3AED?style=for-the-badge" alt="API evaluation providers">
+  <a href="https://openreview.net/forum?id=rdxqBAeW1C"><img src="https://img.shields.io/badge/Paper-OpenReview-B31B1B?style=for-the-badge&logoColor=white" alt="Paper"></a>
+  <a href="https://ragen-ai.github.io/bagen/"><img src="https://img.shields.io/badge/Homepage-BAGEN-1F6FEB?style=for-the-badge&logoColor=white" alt="Homepage"></a>
+  <a href="https://ragen-ai.github.io/bagen/"><img src="https://img.shields.io/badge/Post-BAGEN-111827?style=for-the-badge&logoColor=white" alt="Post"></a>
+  <a href="https://ragen-ai.github.io/bagen/#experiments"><img src="https://img.shields.io/badge/Experiment%20Trajectories-BAGEN-0F766E?style=for-the-badge&logoColor=white" alt="Experiment trajectories"></a>
 </p>
 
 <p align="center">
@@ -27,6 +27,7 @@
 
 ## News
 
+- **2026.05.27.** We are excited to release **BAGEN**.
 
 ## About
 
@@ -71,8 +72,8 @@ The benchmark is organized as a two-pass pipeline:
 ```bash
 git clone --recurse-submodules <repo-url>
 cd BAGEN
-conda create -n ragenv2 python=3.12 -y
-conda activate ragenv2
+conda create -n bagen python=3.12 -y
+conda activate bagen
 bash scripts/setup_bagen.sh
 export PYTHONPATH="$PWD:$PWD/verl"
 ```
@@ -184,9 +185,17 @@ Do not add raw enterprise records to this repository.
 
 ## Citation
 
-Citation information will be added with the paper release.
+If you find this work useful, please cite:
+
+```bibtex
+@misc{lin2026bagen,
+  title={BAGEN: Are LLM Agents Budget-Aware?},
+  author={Yuxiang Lin and Zihan Wang and Mengyang Liu and Yuxuan Shan and Longju Bai and Junyao Zhang and Xing Jin and Boshan Chen and Jinyan Su and Xingyao Wang and Jiaxin Pei and Manling Li},
+  year={2026},
+  note={Preprint},
+}
+```
 
 ## License
 
-This project follows the repository license in `LICENSE`. It includes external
-submodules with their own licenses and citation requirements.
+MIT

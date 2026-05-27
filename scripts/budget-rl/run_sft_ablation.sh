@@ -34,18 +34,18 @@ if [ "${SKIP_ENV_ACTIVATE:-0}" != "1" ]; then
   if [ -n "${VENV_PATH:-}" ] && [ -f "${VENV_PATH}/bin/activate" ]; then
     # shellcheck disable=SC1090
     source "${VENV_PATH}/bin/activate"
-  elif [ -n "${CONDA_ENV_NAME:-ragenv2}" ]; then
+  elif [ -n "${CONDA_ENV_NAME:-bagen}" ]; then
     if command -v conda >/dev/null 2>&1; then
       eval "$(conda shell.bash hook)"
-      conda activate "${CONDA_ENV_NAME:-ragenv2}"
+      conda activate "${CONDA_ENV_NAME:-bagen}"
     elif [ -n "${CONDA_BASE:-}" ] && [ -f "${CONDA_BASE}/etc/profile.d/conda.sh" ]; then
       # shellcheck disable=SC1090
       source "${CONDA_BASE}/etc/profile.d/conda.sh"
-      conda activate "${CONDA_ENV_NAME:-ragenv2}"
+      conda activate "${CONDA_ENV_NAME:-bagen}"
     elif [ -f "/sw/external/python/anaconda3/etc/profile.d/conda.sh" ]; then
       # shellcheck disable=SC1091
       source "/sw/external/python/anaconda3/etc/profile.d/conda.sh"
-      conda activate "${CONDA_ENV_NAME:-ragenv2}"
+      conda activate "${CONDA_ENV_NAME:-bagen}"
     fi
   fi
 fi

@@ -26,8 +26,8 @@ cd BAGEN
 ### 2. Create and activate the conda environment
 
 ```bash
-conda create -n ragenv2 python=3.12 -y
-conda activate ragenv2
+conda create -n bagen python=3.12 -y
+conda activate bagen
 ```
 
 ### 3. Run the environment setup script

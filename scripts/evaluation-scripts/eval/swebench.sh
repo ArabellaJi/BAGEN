@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 eval "$(conda shell.bash hook)"
-conda activate "${CONDA_ENV_NAME:-ragenv2}"
+conda activate "${CONDA_ENV_NAME:-bagen}"
 set -euo pipefail
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)

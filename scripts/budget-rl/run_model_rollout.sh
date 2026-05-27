@@ -58,18 +58,18 @@ activate_runtime() {
     source "$VENV_PATH/bin/activate"
     return 0
   fi
-  if [[ -n "${CONDA_ENV_NAME:-ragenv2}" ]]; then
+  if [[ -n "${CONDA_ENV_NAME:-bagen}" ]]; then
     if command -v conda >/dev/null 2>&1; then
       eval "$(conda shell.bash hook)"
-      conda activate "${CONDA_ENV_NAME:-ragenv2}"
+      conda activate "${CONDA_ENV_NAME:-bagen}"
     elif [[ -n "${CONDA_BASE:-}" && -f "$CONDA_BASE/etc/profile.d/conda.sh" ]]; then
       # shellcheck disable=SC1090
       source "$CONDA_BASE/etc/profile.d/conda.sh"
-      conda activate "${CONDA_ENV_NAME:-ragenv2}"
+      conda activate "${CONDA_ENV_NAME:-bagen}"
     elif [[ -f "/sw/external/python/anaconda3/etc/profile.d/conda.sh" ]]; then
       # shellcheck disable=SC1091
       source "/sw/external/python/anaconda3/etc/profile.d/conda.sh"
-      conda activate "${CONDA_ENV_NAME:-ragenv2}"
+      conda activate "${CONDA_ENV_NAME:-bagen}"
     fi
   fi
 }

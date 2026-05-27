@@ -2,7 +2,7 @@
 set -euo pipefail
 
 eval "$(conda shell.bash hook)"
-conda activate ragenv2
+conda activate "${CONDA_ENV_NAME:-bagen}"
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 PROJECT_ROOT=${PROJECT_ROOT:-$(cd "$SCRIPT_DIR/../../.." && pwd)}

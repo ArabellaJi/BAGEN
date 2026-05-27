@@ -17,7 +17,7 @@ set -euo pipefail
 #   bash scripts/setup_bagen.sh                   # base only
 #   bash scripts/setup_bagen.sh --with-search     # base + search
 
-ENV_NAME="${ENV_NAME:-ragenv2}"
+ENV_NAME="${ENV_NAME:-bagen}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
