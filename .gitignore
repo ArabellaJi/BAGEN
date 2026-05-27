@@ -1,6 +1,5 @@
 **/*.pt
 Budget_NeurIPS_2026*.pdf
-RAGEN*.pdf
 **/checkpoints
 **/wget-log
 **/_build/
@@ -40,7 +39,6 @@ var/
 .installed.cfg
 *.egg
 
-paper/
 wandb/
 
 # PyInstaller
@@ -129,9 +127,3 @@ log/
 # Search data (large files)
 search_data/
 agent_chats/
-
-# Generated analysis drafts
-figure/bagen/temp/
-paper/Analysis/*.pdf
-paper/Analysis/*.html
-paper/Analysis/*_pdf.css

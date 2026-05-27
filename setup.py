@@ -71,9 +71,6 @@ search_requires = [
     "requests",
 ]
 
-# Optional dependencies for Robotouille environment
-robotouille_requires = _read_requirements("external/robotouille/requirements.txt")
-
 setup(
     name='bagen',
     version='0.1',
@@ -86,8 +83,7 @@ setup(
         "webshop": webshop_requires,
         "lean": lean_requires,
         "search": search_requires,
-        "robotouille": robotouille_requires,
-        "all": webshop_requires + lean_requires + search_requires + robotouille_requires,
+        "all": webshop_requires + lean_requires + search_requires,
     },
     package_data={'ragen': ['*/*.md']},
     classifiers=[

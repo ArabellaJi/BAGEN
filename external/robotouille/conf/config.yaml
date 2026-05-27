@@ -1,4 +1,0 @@
-defaults:
-  - evaluation: base_evaluation
-  - llm: base_llm
-  - game: base_game
