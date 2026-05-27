@@ -44,7 +44,6 @@ assets are not part of the budget-awareness paper's main experimental claim.
 | `scripts/evaluation-scripts/eval` | Second-pass budget-estimation scripts that call API models on saved rollouts. |
 | `scripts/budget-estimation-benchmark` | Python entry points for token and money estimation replay. |
 | `scripts/budget-rl` | SFT and GRPO utilities for training budget-estimation models. |
-| `figure/bagen` | Analysis scripts and generated figures for budget-estimation results. |
 
 Large rollout logs, API outputs, local search indices, model checkpoints,
 Weights & Biases runs, and manuscript PDFs are intentionally ignored by Git.
