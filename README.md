@@ -19,9 +19,6 @@
 
 ## News
 
-- **2026.05.27.** The project has been renamed to **BAGEN** for public release.
-- **2026.05.27.** Public cleanup removed private manuscript drafts, generated figures, local logs, and unrelated legacy scripts.
-- **2026.05.27.** Core budget-estimation scripts are kept for Sokoban, Search-R1, SWE-bench-style coding, Warehouse, and Budget-RL training.
 
 ## About
 
@@ -51,20 +48,6 @@ The benchmark is organized as a two-pass pipeline:
    model to output a remaining-budget interval or `impossible`.
 3. **Budget-RL training.** Convert estimation data into SFT/GRPO datasets and
    train a budget estimator with local-model rollout support.
-
-## Repository Map
-
-| Path | Purpose |
-| --- | --- |
-| `config/base.yaml`, `config/evaluate_api_llm.yaml` | Budget-control flags under `agent_proxy`. |
-| `ragen/wrapper/ctx_manager_wrapper.py` | Prompt injection and dialogue logging for budget-aware rollouts. |
-| `ragen/wrapper/es_manager_wrapper.py` | Budget sampling and reward shaping for turn, token, and tool-call budgets. |
-| `ragen/env/token_estimation` | Offline token-budget estimation environment. |
-| `ragen/env/money_estimation` | Offline Warehouse multi-resource estimation environment. |
-| `scripts/evaluation-scripts/origin` | First-pass rollout collection scripts. |
-| `scripts/evaluation-scripts/eval` | Second-pass API budget-estimation scripts. |
-| `scripts/budget-estimation-benchmark` | Python runners for token and money estimation replay. |
-| `scripts/budget-rl` | SFT and GRPO utilities for budget-estimator training. |
 
 ## Getting Started
 
@@ -98,30 +81,6 @@ export DEEPSEEK_API_KEY=...
 ```
 
 Set `DRY_RUN=1` to build prompts and validate inputs without calling an API.
-
-## Collect Original Rollouts
-
-**Sokoban**
-
-```bash
-MODEL_NAME=OpenAI-5.2-Instant \
-VAL_GROUPS=128 \
-OUTPUT_DIR="$PWD/results/estimation/sokoban-origin-gpt5.2-instant-128-main" \
-bash scripts/evaluation-scripts/origin/sokoban.sh
-```
-
-**Search-R1**
-
-```bash
-bash scripts/evaluation-scripts/origin/searchr1_server.sh start
-
-MODEL_NAME=OpenRouter-Gemini-3.1-Pro-Preview \
-SEARCH_MOCK_MODE=False \
-bash scripts/evaluation-scripts/origin/searchr1.sh
-```
-
-Use `status`, `logs`, or `stop` with `searchr1_server.sh` to inspect or manage
-the retrieval server.
 
 ## Run Budget Estimation
 
