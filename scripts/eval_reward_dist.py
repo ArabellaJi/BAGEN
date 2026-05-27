@@ -5,7 +5,7 @@ Runs Qwen2.5-7B on a sample of questions with multi-turn search,
 then reports reward distribution.
 
 Usage:
-    cd /workspace/RAGEN
+    cd /workspace/BAGEN
     CUDA_VISIBLE_DEVICES=0 python scripts/eval_reward_dist.py [--n 100] [--temperature 0.5]
 """
 

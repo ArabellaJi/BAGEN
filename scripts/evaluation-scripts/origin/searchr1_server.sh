@@ -4,7 +4,8 @@ set -euo pipefail
 eval "$(conda shell.bash hook)"
 conda activate ragenv2
 
-PROJECT_ROOT=${PROJECT_ROOT:-"$HOME/agent-budget-control"}
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+PROJECT_ROOT=${PROJECT_ROOT:-$(cd "$SCRIPT_DIR/../../.." && pwd)}
 cd "$PROJECT_ROOT"
 export PYTHONPATH="$PWD:$PWD/verl"
 
@@ -250,7 +251,7 @@ start_server() {
     echo "Install it in the active environment with:" >&2
     echo "  python -m pip install sentence-transformers" >&2
     echo "Or run the search setup path:" >&2
-    echo "  bash scripts/setup_ragen.sh --with-search" >&2
+    echo "  bash scripts/setup_bagen.sh --with-search" >&2
     exit 1
   fi
 
@@ -293,7 +294,7 @@ stop_server() {
 
 COMMAND=${1:-start}
 
-SEARCHR1_DATA_ROOT=${SEARCHR1_DATA_ROOT:-/projects/bflz/searchr1_data}
+SEARCHR1_DATA_ROOT=${SEARCHR1_DATA_ROOT:-"$PROJECT_ROOT/search_data/searchr1"}
 SEARCHR1_INDEX_DIR=${SEARCHR1_INDEX_DIR:-${SEARCHR1_DATA_ROOT}/search_data/prebuilt_indices}
 RETRIEVAL_SERVER_URL=${RETRIEVAL_SERVER_URL:-http://127.0.0.1:8000}
 # Use a dedicated retrieval GPU by default. Override with values like

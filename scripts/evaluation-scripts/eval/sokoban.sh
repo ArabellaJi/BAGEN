@@ -5,7 +5,7 @@ conda activate ragenv2
 set -euo pipefail
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-PROJECT_ROOT=${PROJECT_ROOT:-"$HOME/agent-budget-control"}
+PROJECT_ROOT=${PROJECT_ROOT:-$(cd "$SCRIPT_DIR/../../.." && pwd)}
 cd "$PROJECT_ROOT"
 export PYTHONPATH="$PWD:$PWD/verl"
 
@@ -14,6 +14,7 @@ MODEL_NAME=${MODEL_NAME:-OpenAI-5.2-Codex-low-thinking}
 REASONING_EFFORT=${REASONING_EFFORT:-}
 OPENROUTER_REASONING_ENABLED=${OPENROUTER_REASONING_ENABLED:-}
 OPENROUTER_CACHE_ENABLED=${OPENROUTER_CACHE_ENABLED:-}
+DRY_RUN=${DRY_RUN:-0}
 
 case "$MODEL_NAME" in
   OpenAI-5.2-Instant)
@@ -88,35 +89,37 @@ case "$MODEL_NAME" in
     ;;
 esac
 
-case "$PROVIDER" in
-  openai)
-    : "${OPENAI_API_KEY:?Please export OPENAI_API_KEY before running this evaluation.}"
-    ;;
-  anthropic)
-    : "${ANTHROPIC_API_KEY:?Please export ANTHROPIC_API_KEY before running this evaluation.}"
-    ;;
-  gemini)
-    : "${GEMINI_API_KEY:?Please export GEMINI_API_KEY before running this evaluation.}"
-    ;;
-  openrouter)
-    : "${OPENROUTER_API_KEY:?Please export OPENROUTER_API_KEY before running this evaluation.}"
-    ;;
-  together)
-    : "${TOGETHER_API_KEY:?Please export TOGETHER_API_KEY before running this evaluation.}"
-    ;;
-  deepseek)
-    : "${DEEPSEEK_API_KEY:?Please export DEEPSEEK_API_KEY before running this evaluation.}"
-    ;;
-  *)
-    echo "Unsupported PROVIDER: $PROVIDER" >&2
-    exit 1
-    ;;
-esac
+if [[ "$DRY_RUN" != "1" ]]; then
+  case "$PROVIDER" in
+    openai)
+      : "${OPENAI_API_KEY:?Please export OPENAI_API_KEY before running this evaluation.}"
+      ;;
+    anthropic)
+      : "${ANTHROPIC_API_KEY:?Please export ANTHROPIC_API_KEY before running this evaluation.}"
+      ;;
+    gemini)
+      : "${GEMINI_API_KEY:?Please export GEMINI_API_KEY before running this evaluation.}"
+      ;;
+    openrouter)
+      : "${OPENROUTER_API_KEY:?Please export OPENROUTER_API_KEY before running this evaluation.}"
+      ;;
+    together)
+      : "${TOGETHER_API_KEY:?Please export TOGETHER_API_KEY before running this evaluation.}"
+      ;;
+    deepseek)
+      : "${DEEPSEEK_API_KEY:?Please export DEEPSEEK_API_KEY before running this evaluation.}"
+      ;;
+    *)
+      echo "Unsupported PROVIDER: $PROVIDER" >&2
+      exit 1
+      ;;
+  esac
+fi
 
 RUN_NAME=${RUN_NAME:-sokoban-origin-openai-5-2-codex-low-thinking-128-main_openai-5-2-codex-low-thinking-128-main}
 RESULT_ROOT=${RESULT_ROOT:-"$PROJECT_ROOT/results/evaluation-scripts/eval"}
 OUTPUT_DIR=${OUTPUT_DIR:-"$RESULT_ROOT/${RUN_NAME}"}
-INPUT_JSON=${INPUT_JSON:-"${HOME}/database/origin/sokoban-origin-openai-openai-5-2-codex-low-thinking-128-main/sokoban_api_eval_estimation_eval_estimation_dialogues.json"}
+INPUT_JSON=${INPUT_JSON:-}
 OUTPUT_JSON=${OUTPUT_JSON:-"$OUTPUT_DIR/${RUN_NAME}.json"}
 TEMP_JSON=${TEMP_JSON:-"$OUTPUT_DIR/${RUN_NAME}_pairs.json"}
 SYSTEM_PROMPT_FILE=${SYSTEM_PROMPT_FILE:-"$SCRIPT_DIR/prompts/sokoban_estimation_system.txt"}
@@ -135,18 +138,16 @@ ANTHROPIC_THINKING_BUDGET_TOKENS=${ANTHROPIC_THINKING_BUDGET_TOKENS:-}
 ANTHROPIC_THINKING_ADAPTIVE=${ANTHROPIC_THINKING_ADAPTIVE:-0}
 ANTHROPIC_THINKING_DISPLAY=${ANTHROPIC_THINKING_DISPLAY:-}
 ANTHROPIC_OUTPUT_EFFORT=${ANTHROPIC_OUTPUT_EFFORT:-}
-DRY_RUN=${DRY_RUN:-0}
 
 DEFAULT_RESULT_INPUT_JSON="$PROJECT_ROOT/results/estimation/sokoban-origin-gpt5.2-instant-128-main/sokoban_api_eval_estimation_eval_estimation_dialogues.json"
 DEFAULT_BENCHMARK_INPUT_JSON="$PROJECT_ROOT/results/budget-estimation-benchmark/sokoban-origin-gpt5.2-instant-128-window=1-max-turn=6/sokoban_api_eval_estimation_eval_estimation_dialogues.json"
-DEFAULT_DATABASE_INPUT_JSON="${HOME}/database/origin/sokoban-origin-openai-openai-5-2-codex-low-thinking-128-main/sokoban_api_eval_estimation_eval_estimation_dialogues.json"
 if [[ -z "${INPUT_JSON:-}" ]]; then
   if [[ -f "$DEFAULT_RESULT_INPUT_JSON" ]]; then
     INPUT_JSON="$DEFAULT_RESULT_INPUT_JSON"
   elif [[ -f "$DEFAULT_BENCHMARK_INPUT_JSON" ]]; then
     INPUT_JSON="$DEFAULT_BENCHMARK_INPUT_JSON"
   else
-    INPUT_JSON="$DEFAULT_DATABASE_INPUT_JSON"
+    INPUT_JSON="$DEFAULT_RESULT_INPUT_JSON"
   fi
 fi
 

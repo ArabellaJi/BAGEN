@@ -75,14 +75,12 @@ search_requires = [
 robotouille_requires = _read_requirements("external/robotouille/requirements.txt")
 
 setup(
-    name='ragen',
+    name='bagen',
     version='0.1',
     package_dir={'': '.'},
-    packages=find_packages(include=['ragen']),
-    author='',
-    author_email='',
-    acknowledgements='',
-    description='',
+    packages=find_packages(include=['ragen', 'ragen.*']),
+    author='BAGEN contributors',
+    description='BAGEN: budget-aware agent training, rollout logging, and progressive budget-estimation benchmarks.',
     install_requires=base_requires,
     extras_require={
         "webshop": webshop_requires,

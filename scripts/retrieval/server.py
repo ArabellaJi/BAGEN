@@ -8,7 +8,7 @@ This code is adapted from the RLLM project:
   License: Apache-2.0
 
 Usage:
-    python server.py --data_dir /projects/bflz/searchr1_data/search_data/prebuilt_indices --port 8000
+    python server.py --data_dir search_data/searchr1/search_data/prebuilt_indices --port 8000
 """
 
 import argparse
@@ -29,7 +29,7 @@ from sentence_transformers import SentenceTransformer
 
 DEFAULT_SEARCHR1_DATA_ROOT = os.environ.get(
     "SEARCHR1_DATA_ROOT",
-    "/projects/bflz/searchr1_data",
+    str(Path(__file__).resolve().parents[2] / "search_data" / "searchr1"),
 )
 DEFAULT_INDEX_DIR = os.path.join(DEFAULT_SEARCHR1_DATA_ROOT, "search_data", "prebuilt_indices")
 

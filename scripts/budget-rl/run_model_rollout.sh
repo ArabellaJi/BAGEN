@@ -142,7 +142,7 @@ case "$TASK" in
     ;;
   searchr1|search|searchqa)
     ENV_TAG="${ENV_TAG:-SearchQA}"
-    SEARCH_DATA_PATH="${SEARCH_DATA_PATH:-/projects/bflz/searchr1_data/data/search/train.parquet}"
+    SEARCH_DATA_PATH="${SEARCH_DATA_PATH:-$PROJECT_ROOT/search_data/searchr1/data/search/train.parquet}"
     RETRIEVAL_SERVER_URL="${RETRIEVAL_SERVER_URL:-http://127.0.0.1:8000}"
     SEARCH_MOCK_MODE="${SEARCH_MOCK_MODE:-false}"
     cmd+=(

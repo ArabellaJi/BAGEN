@@ -28,7 +28,7 @@ Reward is computed using F1 / exact match against the HotpotQA ground truth.
 # Download HotpotQA → data/search/{train,val}.parquet
 python scripts/prepare_search_data.py
 
-# Download Wikipedia corpus + FAISS index (~74GB) → search_data/prebuilt_indices/
+# Download Wikipedia corpus + FAISS index → search_data/searchr1/search_data/prebuilt_indices/
 python scripts/download_search_index.py
 ```
 
@@ -37,10 +37,7 @@ python scripts/download_search_index.py
 The retrieval server provides dense retrieval over ~21M Wikipedia passages using E5-base-v2 embeddings and a FAISS Flat index.
 
 ```bash
-python scripts/retrieval/server.py \
-    --data_dir ./search_data/prebuilt_indices \
-    --port 8000 --host 127.0.0.1 \
-    --device cuda:0 --gpu_memory_limit_mb 6144
+bash scripts/evaluation-scripts/origin/searchr1_server.sh start
 ```
 
 Loading the 61GB FAISS index takes 2-5 minutes. Verify with:
@@ -55,40 +52,13 @@ We recommend running the retrieval server on a **dedicated GPU** separate from t
 
 Run the server on a GPU not used by training (e.g., `--device cuda:7`, train on GPUs 0-6). During rollout, hundreds of environments issue concurrent retrieval requests (e.g., 256 env groups can produce 1000+ requests). Running on CPU cannot keep up with this concurrency and causes timeouts. A dedicated GPU with `threading.Lock` serialization handles this load reliably.
 
-### 3. Run training
+### 3. Collect rollouts
 
 ```bash
-# PPO, no filtering (baseline)
-bash scripts/runs/run_search_benchmark.sh \
-    --algos PPO \
-    --gpus 0,1,2,3,4,5,6,7 --gpus-per-exp 8
-
-# PPO, top_k filtering (keep top 25% by reward variance)
-bash scripts/runs/run_search_benchmark.sh \
-    --algos PPO --filter-strategy top_k --filter-value 0.25 \
-    --gpus 0,1,2,3,4,5,6,7 --gpus-per-exp 8
-
-# PPO, top_p filtering (keep 90% by reward variance)
-bash scripts/runs/run_search_benchmark.sh \
-    --algos PPO --filter-strategy top_p --filter-value 0.9 \
-    --gpus 0,1,2,3,4,5,6,7 --gpus-per-exp 8
+MODEL_NAME=OpenRouter-Gemini-3.1-Pro-Preview \
+SEARCH_MOCK_MODE=False \
+bash scripts/evaluation-scripts/origin/searchr1.sh
 ```
-
-Key training parameters (pass via `run_search_benchmark.sh` flags):
-
-| Flag | Description | Default |
-|------|-------------|---------|
-| `--algos` | Algorithm: PPO or GRPO | PPO |
-| `--filter-strategy` | Rollout filter strategy: `top_p`, `top_k`, etc. | `top_p` |
-| `--filter-value` | Filter value (1.0 = no filtering) | `1.0` |
-| `--gpus` | Comma-separated GPU IDs | auto-detect |
-| `--gpus-per-exp` | GPUs per experiment | 1 |
-| `--gpu-memory-utilization` | vLLM KV cache memory fraction | 0.6 |
-| `--micro-batch` | Micro batch size per GPU | config default |
-| `--mini-batch` | PPO mini batch size | config default |
-| `--save-freq` | Checkpoint save frequency | -1 (disabled) |
-| `--steps` | Total training steps | 200 |
-| `--retrieval-port` | Retrieval server port | 8000 |
 
 ## Config
 

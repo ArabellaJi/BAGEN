@@ -8,11 +8,12 @@ The search environment is adapted from the RLLM project:
 
 import os
 from dataclasses import dataclass, field
+from pathlib import Path
 
 
 DEFAULT_SEARCHR1_DATA_ROOT = os.environ.get(
     "SEARCHR1_DATA_ROOT",
-    "/projects/bflz/searchr1_data",
+    str(Path(__file__).resolve().parents[3] / "search_data" / "searchr1"),
 )
 
 

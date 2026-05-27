@@ -1,11 +1,11 @@
 # Budget RL Pipeline
 
 This directory contains the budget-probe training loop that used to live in
-`budget-rl`, wired to RAGEN local-model rollouts inside this repository.
+`budget-rl`, wired to BAGEN local-model rollouts inside this repository.
 
 The intended loop is:
 
-1. Generate task trajectories with a HuggingFace model through vLLM/RAGEN.
+1. Generate task trajectories with a HuggingFace model through vLLM/BAGEN.
 2. Convert trajectories into budget-estimation SFT and RL datasets.
 3. Run SFT warm-up on the budget-estimation probes.
 4. Run GRPO with `budget_probe_reward.py`.

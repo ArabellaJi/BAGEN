@@ -263,8 +263,8 @@ custom_envs:
     # env_config: null
     env_config: 
       dataset: small # choose from small or full
-    #   data_path: /RAGEN-Dev/external/webshop-minimal/webshop_minimal
-    #   file_path: /RAGEN-Dev/external/webshop-minimal/webshop_minimal/data/items_shuffle.json
+    #   data_path: external/webshop-minimal/webshop_minimal
+    #   file_path: external/webshop-minimal/webshop_minimal/data/items_shuffle.json
 
   Lean:
     env_type: lean

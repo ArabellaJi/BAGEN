@@ -16,6 +16,7 @@ Architecture follows RAGEN's WebShop pattern:
 import logging
 import os
 import re
+from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
 import gymnasium as gym
@@ -249,7 +250,7 @@ if __name__ == "__main__":
     config = SearchEnvConfig(
         train_path=os.environ.get(
             "SEARCHR1_TRAIN_PATH",
-            "/projects/bflz/searchr1_data/data/search/train.parquet",
+            str(Path(__file__).resolve().parents[3] / "search_data" / "searchr1" / "data" / "search" / "train.parquet"),
         ),
         mock_mode=True,
         max_steps=5,

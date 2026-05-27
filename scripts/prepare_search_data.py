@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Prepare HotpotQA data for the RAGEN Search environment.
+Prepare HotpotQA data for the BAGEN Search-R1 environment.
 
 Downloads HotpotQA from HuggingFace and saves as parquet files with columns:
   - question (str)
@@ -10,11 +10,12 @@ Downloads HotpotQA from HuggingFace and saves as parquet files with columns:
 Usage:
     python scripts/prepare_search_data.py
     python scripts/prepare_search_data.py --train_size 20000 --test_size 1000
-    python scripts/prepare_search_data.py --output_dir /projects/bflz/searchr1_data/data/search
+    python scripts/prepare_search_data.py --output_dir search_data/searchr1/data/search
 """
 
 import argparse
 import os
+from pathlib import Path
 
 import pandas as pd
 from datasets import load_dataset
@@ -22,13 +23,13 @@ from datasets import load_dataset
 
 DEFAULT_SEARCHR1_DATA_ROOT = os.environ.get(
     "SEARCHR1_DATA_ROOT",
-    "/projects/bflz/searchr1_data",
+    str(Path(__file__).resolve().parents[1] / "search_data" / "searchr1"),
 )
 DEFAULT_OUTPUT_DIR = os.path.join(DEFAULT_SEARCHR1_DATA_ROOT, "data", "search")
 
 
 def prepare_hotpotqa(output_dir: str = DEFAULT_OUTPUT_DIR, train_size: int = None, test_size: int = None):
-    """Download HotpotQA and convert to parquet format for RAGEN."""
+    """Download HotpotQA and convert to parquet format for BAGEN."""
 
     os.makedirs(output_dir, exist_ok=True)
 
@@ -53,7 +54,7 @@ def prepare_hotpotqa(output_dir: str = DEFAULT_OUTPUT_DIR, train_size: int = Non
     train_df.to_parquet(train_path, index=False)
     print(f"Saved {len(train_df)} train examples to {train_path}")
 
-    # Process validation split (used as test in RAGEN)
+    # Process validation split, used as the default Search-R1 test set.
     val_data = dataset["validation"]
     if test_size is not None:
         val_data = val_data.select(range(min(test_size, len(val_data))))
@@ -79,7 +80,7 @@ def prepare_hotpotqa(output_dir: str = DEFAULT_OUTPUT_DIR, train_size: int = Non
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Prepare HotpotQA data for RAGEN Search environment")
+    parser = argparse.ArgumentParser(description="Prepare HotpotQA data for BAGEN Search-R1")
     parser.add_argument("--output_dir", default=DEFAULT_OUTPUT_DIR, help="Output directory for parquet files")
     parser.add_argument("--train_size", type=int, default=None, help="Max train examples (default: all ~90k)")
     parser.add_argument("--test_size", type=int, default=None, help="Max test examples (default: all ~7k)")

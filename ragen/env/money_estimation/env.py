@@ -320,26 +320,35 @@ def _sample_half_reachable_constraints(
             cost_budget_ratio=sampled_cost_ratio,
         )
     else:
-        while True:
-            constraints = _build_constraints_from_ratios(
-                final_cash_usd=final_cash_usd,
-                actual_total_time_weeks=actual_total_time_weeks,
-                actual_total_warehouse_item_weeks=actual_total_warehouse_item_weeks,
-                actual_total_cost_usd=actual_total_cost_usd,
-                target_cash_ratio=_sample_ratio_between(rng, 0.50, 2.00),
-                time_budget_ratio=_sample_ratio_between(rng, 0.50, 2.00),
-                warehouse_budget_ratio=_sample_ratio_between(rng, 0.50, 2.00),
-                cost_budget_ratio=_sample_ratio_between(rng, 0.50, 2.00),
-            )
-            if not _constraints_allow_rollout_success(
-                final_cash_usd=final_cash_usd,
-                actual_total_time_weeks=actual_total_time_weeks,
-                actual_total_warehouse_item_weeks=actual_total_warehouse_item_weeks,
-                actual_total_cost_usd=actual_total_cost_usd,
-                rollout_success=rollout_success,
-                constraints=constraints,
-            ):
-                return constraints
+        target_cash_usd = _sample_half_reachable_target_cash(
+            final_cash_usd,
+            reachable=False,
+            rng=rng,
+        )
+        constraints = _build_constraints_from_ratios(
+            final_cash_usd=final_cash_usd,
+            actual_total_time_weeks=actual_total_time_weeks,
+            actual_total_warehouse_item_weeks=actual_total_warehouse_item_weeks,
+            actual_total_cost_usd=actual_total_cost_usd,
+            target_cash_ratio=1.0,
+            time_budget_ratio=_sample_ratio_between(
+                rng,
+                1.0,
+                max(1.0, float(time_budget_ratio)),
+            ),
+            warehouse_budget_ratio=_sample_ratio_between(
+                rng,
+                1.0,
+                max(1.0, float(warehouse_budget_ratio)),
+            ),
+            cost_budget_ratio=_sample_ratio_between(
+                rng,
+                1.0,
+                max(1.0, float(cost_budget_ratio)),
+            ),
+        )
+        constraints["target_cash_usd"] = int(target_cash_usd)
+        return constraints
 
 
 def _normalize_interval(lower: float, upper: float) -> Tuple[float, float]:

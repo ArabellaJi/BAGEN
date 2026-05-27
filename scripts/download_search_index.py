@@ -20,7 +20,7 @@ from tqdm import tqdm
 
 DEFAULT_SEARCHR1_DATA_ROOT = os.environ.get(
     "SEARCHR1_DATA_ROOT",
-    "/projects/bflz/searchr1_data",
+    str(Path(__file__).resolve().parents[1] / "search_data" / "searchr1"),
 )
 DEFAULT_INDEX_ROOT = os.path.join(DEFAULT_SEARCHR1_DATA_ROOT, "search_data")
 DEFAULT_WIKI_CORPUS_REPO_ID = os.environ.get("WIKI_CORPUS_REPO_ID", "")

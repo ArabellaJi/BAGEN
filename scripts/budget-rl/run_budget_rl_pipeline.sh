@@ -35,7 +35,7 @@ usage() {
 Usage:
   bash scripts/budget-rl/run_budget_rl_pipeline.sh [all|rollout|prepare|sft|rl|rollout,prepare,...]
 
-This runs a local-model budget RL loop inside agent-budget-control:
+This runs a local-model budget RL loop inside BAGEN:
   1. rollout: generate task trajectories with a HF/vLLM model via RAGEN
   2. prepare: convert trajectories into SFT and RL parquet data
   3. sft: supervised warm-up on budget-estimation probes

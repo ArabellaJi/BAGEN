@@ -4,7 +4,8 @@ set -euo pipefail
 eval "$(conda shell.bash hook)"
 conda activate ragenv2
 
-PROJECT_ROOT=${PROJECT_ROOT:-"$HOME/agent-budget-control"}
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+PROJECT_ROOT=${PROJECT_ROOT:-$(cd "$SCRIPT_DIR/../../.." && pwd)}
 cd "$PROJECT_ROOT"
 export PYTHONPATH="$PWD:$PWD/verl"
 
@@ -59,7 +60,7 @@ VAL_GROUPS=${VAL_GROUPS:-128}
 VAL_START_GROUP_INDEX=${VAL_START_GROUP_INDEX:-0}
 VAL_ROLLOUT_CHUNK_SIZE=${VAL_ROLLOUT_CHUNK_SIZE:-8}
 SEARCH_ENV_TAG=${SEARCH_ENV_TAG:-SearchQA}
-SEARCHR1_DATA_ROOT=${SEARCHR1_DATA_ROOT:-/projects/bflz/searchr1_data}
+SEARCHR1_DATA_ROOT=${SEARCHR1_DATA_ROOT:-"$PROJECT_ROOT/search_data/searchr1"}
 SEARCH_DATA_DIR=${SEARCH_DATA_DIR:-${SEARCHR1_DATA_ROOT}/data/search}
 SEARCH_DATA_PATH=${SEARCH_DATA_PATH:-${SEARCH_DATA_DIR}/train.parquet}
 SEARCH_MOCK_MODE=${SEARCH_MOCK_MODE:-False}

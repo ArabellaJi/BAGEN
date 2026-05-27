@@ -24,7 +24,7 @@ resolve_path() {
 }
 
 # Default values
-SEARCHR1_DATA_ROOT=${SEARCHR1_DATA_ROOT:-/projects/bflz/searchr1_data}
+SEARCHR1_DATA_ROOT=${SEARCHR1_DATA_ROOT:-${PROJECT_ROOT}/search_data/searchr1}
 SEARCHR1_INDEX_DIR=${SEARCHR1_INDEX_DIR:-${SEARCHR1_DATA_ROOT}/search_data/prebuilt_indices}
 DATA_DIR=$(resolve_path "${1:-$SEARCHR1_INDEX_DIR}")
 PORT=${2:-8000}

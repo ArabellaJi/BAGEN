@@ -5,7 +5,7 @@ conda activate ragenv2
 set -euo pipefail
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-PROJECT_ROOT=${PROJECT_ROOT:-"$HOME/agent-budget-control"}
+PROJECT_ROOT=${PROJECT_ROOT:-$(cd "$SCRIPT_DIR/../../.." && pwd)}
 cd "$PROJECT_ROOT"
 export PYTHONPATH="$PWD:$PWD/verl"
 
@@ -180,7 +180,7 @@ else
   COST_BUDGET_RATIO=${COST_BUDGET_RATIO:-1.0}
 fi
 
-INPUT_SOURCE=${INPUT_SOURCE:-"${HOME}/database/origin/newwarehouse-qwen/combined_qwen3-235b_128seeds_harsh.json"}
+INPUT_SOURCE=${INPUT_SOURCE:-}
 DEFAULT_INPUT_JSON="$OUTPUT_DIR/newwarehouse-sonnet-4-test_combined_rollouts.json"
 INPUT_JSON=${INPUT_JSON:-}
 

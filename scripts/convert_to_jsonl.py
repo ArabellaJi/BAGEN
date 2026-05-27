@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Convert RAGEN rollout .pkl files to OpenAI-compatible JSONL format.
+Convert BAGEN/RAGEN rollout .pkl files to OpenAI-compatible JSONL format.
 
 Usage:
     python scripts/convert_to_jsonl.py --input results/eval/val_rollouts_*.pkl --output trajectories.jsonl
@@ -152,7 +152,7 @@ def convert_pkl_to_jsonl(input_path: Path, output_path: Path) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Convert RAGEN rollout .pkl files to OpenAI-compatible JSONL"
+        description="Convert BAGEN/RAGEN rollout .pkl files to OpenAI-compatible JSONL"
     )
     parser.add_argument(
         "--input",

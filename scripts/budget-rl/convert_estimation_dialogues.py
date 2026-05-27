@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Convert agent-budget-control "estimation_dialogues.json" rollouts into the
+Convert BAGEN "estimation_dialogues.json" rollouts into the
 flat JSONL format expected by prepare_budget_probe.py.
 
 Input (one JSON file): list of dicts with fields:
@@ -20,8 +20,8 @@ Output JSONL: one line per dialogue:
 
 Usage:
   python convert_estimation_dialogues.py \
-      --input /workspace/agent-budget-control/results/estimation/sokoban-origin-qwen3-8b-6x6-1box-32x16/sokoban_api_eval_estimation_eval_estimation_dialogues.json \
-      --output /workspace/verl-x/sokoban_qwen3-8b_6x6_1box_32x16.jsonl
+      --input /workspace/BAGEN/results/estimation/sokoban-origin-qwen3-8b-6x6-1box-32x16/sokoban_api_eval_estimation_eval_estimation_dialogues.json \
+      --output /workspace/BAGEN/data/budget-rl/sokoban_qwen3-8b_6x6_1box_32x16.jsonl
 """
 
 import argparse

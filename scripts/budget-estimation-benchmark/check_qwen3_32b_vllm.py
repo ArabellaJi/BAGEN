@@ -28,8 +28,8 @@ def parse_args():
     )
     parser.add_argument(
         "--model-path",
-        default="/projects/e32695/Qwen3-14B",
-        help="Local Hugging Face model directory.",
+        default=os.environ.get("MODEL_PATH", "Qwen/Qwen3-14B"),
+        help="Hugging Face model id or local model directory.",
     )
     parser.add_argument(
         "--tensor-parallel-size",
