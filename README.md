@@ -4,30 +4,29 @@
 <p align="center"><img src="public/BAGEN_logo.png" width="260px" alt="BAGEN logo" /></p>
 
 <p align="center">
-  <strong>BAGEN</strong> studies whether reasoning agents can estimate future token, time, money, and storage budgets before they finish a task.
+  <strong>BAGEN</strong> studies whether agents can estimate token, time, money, and storage costs mid-completing a task.
 </p>
 <p align="center">
-  It provides rollout logging, offline budget-estimation benchmarks, experiment trajectories, and SFT/RL utilities for training budget-aware agents.
+  We provide rollout logging, budget-estimation benchmarks, experiment trajectories, and SFT/RL for training budget-aware agents.
 </p>
 
 <p align="center">
-  <a href="https://openreview.net/forum?id=rdxqBAeW1C"><img src="https://img.shields.io/badge/Paper-OpenReview-B31B1B?style=for-the-badge&logoColor=white" alt="Paper"></a>
+  <a href="./bagen.pdf"><img src="https://img.shields.io/badge/Paper-PDF-B31B1B?style=for-the-badge&logoColor=white" alt="Paper"></a>
   <a href="https://ragen-ai.github.io/bagen/"><img src="https://img.shields.io/badge/Homepage-BAGEN-1F6FEB?style=for-the-badge&logoColor=white" alt="Homepage"></a>
-  <a href="https://ragen-ai.github.io/bagen/"><img src="https://img.shields.io/badge/Post-BAGEN-111827?style=for-the-badge&logoColor=white" alt="Post"></a>
-  <a href="https://ragen-ai.github.io/bagen/#experiments"><img src="https://img.shields.io/badge/Experiment%20Trajectories-BAGEN-0F766E?style=for-the-badge&logoColor=white" alt="Experiment trajectories"></a>
+  <img src="https://img.shields.io/badge/Post-Coming%20Soon-111827?style=for-the-badge&logoColor=white" alt="Post">
+  <a href="https://huggingface.co/datasets/MLL-Lab/BAGEN"><img src="https://img.shields.io/badge/Rollout%20Results-HuggingFace-0F766E?style=for-the-badge&logoColor=white" alt="Rollout Results"></a>
 </p>
 
 <p align="center">
   <img src="public/fig1.png" width="900px" alt="BAGEN overview">
 </p>
 <p align="center" style="font-size: 15px; max-width: 900px; margin: 0 auto;">
-  <em>BAGEN evaluates whether agents can estimate future budget consumption
-  from partial rollouts across token and multi-resource settings.</em>
+  <em>BAGEN evaluates whether agents can estimate budget cost from partial rollouts, on token and multi-resource settings.</em>
 </p>
 
 ## News
 
-- **2026.05.27.** We are excited to release **BAGEN**.
+- **2026.05.27.** We are excited to release **BAGEN**!
 
 ## About
 
