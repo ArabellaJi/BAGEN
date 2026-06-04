@@ -40,6 +40,12 @@ ensure_conda() {
         echo "conda is required but was not found in PATH." >&2
         exit 1
     fi
+    # Pre-set variables that some system conda activation scripts reference
+    # without defaults, which would trigger set -u errors on certain clusters.
+    export PROJ_LIB="${PROJ_LIB:-}"
+    export PROJ_DATA="${PROJ_DATA:-}"
+    export _CONDA_SET_PROJ_LIB="${_CONDA_SET_PROJ_LIB:-}"
+    export _CONDA_SET_PROJ_DATA="${_CONDA_SET_PROJ_DATA:-}"
     eval "$(conda shell.bash hook)"
 }
 
