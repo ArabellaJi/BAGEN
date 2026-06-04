@@ -62,7 +62,9 @@ ensure_env() {
     fi
 
     print_step "Activating conda environment ${ENV_NAME}"
+    set +u
     conda activate "${ENV_NAME}"
+    set -u
 }
 
 setup_search() {
