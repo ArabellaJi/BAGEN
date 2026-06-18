@@ -121,8 +121,7 @@ torchrun --standalone --nnodes=1 --nproc_per_node=${NGPUS} \
     trainer.save_freq=${SAVE_FREQ} \
     trainer.total_epochs=${TOTAL_EPOCHS} \
     "checkpoint.save_contents=${SFT_CHECKPOINT_SAVE_CONTENTS}" \
-    "checkpoint.load_contents=${SFT_CHECKPOINT_LOAD_CONTENTS}" \
-    +model.attn_implementation=eager "$@"
+    "checkpoint.load_contents=${SFT_CHECKPOINT_LOAD_CONTENTS}" "$@"
 
 # Convert per-epoch FSDP checkpoints to HuggingFace format.
 # We want epoch 2, 3, and final epoch (== TOTAL_EPOCHS).
