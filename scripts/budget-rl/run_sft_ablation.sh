@@ -117,7 +117,7 @@ torchrun --standalone --nnodes=1 --nproc_per_node=${NGPUS} \
     data.messages_key=messages \
     data.train_batch_size=${TRAIN_BS} \
     data.micro_batch_size_per_gpu=${MICRO_BS} \
-    data.max_length=9216 \
+    data.max_length=${MAX_SEQ_LENGTH:-4096} \
     +data.ignore_input_ids_mismatch=True \
     optim.lr=${LR} \
     engine=fsdp \
