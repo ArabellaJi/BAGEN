@@ -60,10 +60,14 @@ if [ "${SKIP_ENV_ACTIVATE:-0}" != "1" ]; then
   fi
 fi
 export PYTHONPATH="${PROJECT_ROOT}:${PROJECT_ROOT}/verl${PYTHONPATH:+:${PYTHONPATH}}"
-PROJECT_PARENT="$(dirname "$PROJECT_ROOT")"
-export HF_HOME="${HF_HOME:-${PROJECT_PARENT}/cache/huggingface}"
-export HF_DATASETS_CACHE="${HF_DATASETS_CACHE:-${PROJECT_PARENT}/cache/datasets}"
-export TRANSFORMERS_CACHE="${TRANSFORMERS_CACHE:-${PROJECT_PARENT}/cache/huggingface}"
+if [[ "$PROJECT_ROOT" == /home/* ]]; then
+  CACHE_BASE="/projects/p33224/cache"
+else
+  CACHE_BASE="$(dirname "$PROJECT_ROOT")/cache"
+fi
+export HF_HOME="${HF_HOME:-${CACHE_BASE}/huggingface}"
+export HF_DATASETS_CACHE="${HF_DATASETS_CACHE:-${CACHE_BASE}/datasets}"
+export TRANSFORMERS_CACHE="${TRANSFORMERS_CACHE:-${CACHE_BASE}/huggingface}"
 mkdir -p "${HF_HOME}" "${HF_DATASETS_CACHE}" "${TRANSFORMERS_CACHE}"
 
 if [ ! -f "${DATA_DIR}/train.parquet" ]; then
