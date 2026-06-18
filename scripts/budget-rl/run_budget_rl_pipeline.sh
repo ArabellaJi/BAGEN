@@ -24,6 +24,10 @@ EXP_BASE="${EXP_BASE:-$DATA_ROOT/$EXP_NAME}"
 if [[ "$EXP_BASE" != /* ]]; then
   EXP_BASE="$PROJECT_ROOT/$EXP_BASE"
 fi
+# Redirect to project space if EXP_BASE is in home directory (avoid quota issues)
+if [[ "$EXP_BASE" == /home/* ]]; then
+  EXP_BASE="/projects/p33224/bagen_experiments/${EXP_NAME}"
+fi
 ROLLOUT_JSONL="${ROLLOUT_JSONL:-$EXP_BASE/rollouts.jsonl}"
 if [[ "$ROLLOUT_JSONL" != /* ]]; then
   ROLLOUT_JSONL="$PROJECT_ROOT/$ROLLOUT_JSONL"

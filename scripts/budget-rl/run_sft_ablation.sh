@@ -27,6 +27,10 @@ shift
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="${PROJECT_ROOT:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
 BASE="${BASE:-${SCRIPT_DIR}/ablation_data}"
+# Redirect to project space if BASE is in home directory (avoid quota issues)
+if [[ "$BASE" == /home/* ]]; then
+  BASE="/projects/p33224/bagen_experiments/$(basename "$BASE")"
+fi
 DATA_DIR="${BASE}/${ABLATION}"
 SAVE_DIR="${BASE}/checkpoints/${ABLATION}"
 

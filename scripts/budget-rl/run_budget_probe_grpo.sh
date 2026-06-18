@@ -27,21 +27,41 @@ if [ "${SKIP_ENV_ACTIVATE:-0}" != "1" ]; then
     # shellcheck disable=SC1090
     source "${VENV_PATH}/bin/activate"
   elif [ -n "${CONDA_ENV_NAME:-bagen}" ]; then
+    export PROJ_LIB="${PROJ_LIB:-}"
+    export PROJ_DATA="${PROJ_DATA:-}"
+    export _CONDA_SET_PROJ_LIB="${_CONDA_SET_PROJ_LIB:-}"
+    export _CONDA_SET_PROJ_DATA="${_CONDA_SET_PROJ_DATA:-}"
     if command -v conda >/dev/null 2>&1; then
       eval "$(conda shell.bash hook)"
+      set +u
       conda activate "${CONDA_ENV_NAME:-bagen}"
+      set -u
     elif [ -n "${CONDA_BASE:-}" ] && [ -f "${CONDA_BASE}/etc/profile.d/conda.sh" ]; then
       # shellcheck disable=SC1090
       source "${CONDA_BASE}/etc/profile.d/conda.sh"
+      set +u
       conda activate "${CONDA_ENV_NAME:-bagen}"
+      set -u
     elif [ -f "/sw/external/python/anaconda3/etc/profile.d/conda.sh" ]; then
       # shellcheck disable=SC1091
       source "/sw/external/python/anaconda3/etc/profile.d/conda.sh"
+      set +u
       conda activate "${CONDA_ENV_NAME:-bagen}"
+      set -u
     fi
   fi
 fi
 export PYTHONPATH="${PROJECT_ROOT}:${PROJECT_ROOT}/verl${PYTHONPATH:+:${PYTHONPATH}}"
+export TRANSFORMERS_ATTENTION_IMPLEMENTATION="${TRANSFORMERS_ATTENTION_IMPLEMENTATION:-eager}"
+if [[ "$PROJECT_ROOT" == /home/* ]]; then
+  CACHE_BASE="/projects/p33224/cache"
+else
+  CACHE_BASE="$(dirname "$PROJECT_ROOT")/cache"
+fi
+export HF_HOME="${HF_HOME:-${CACHE_BASE}/huggingface}"
+export HF_DATASETS_CACHE="${HF_DATASETS_CACHE:-${CACHE_BASE}/datasets}"
+export TRANSFORMERS_CACHE="${TRANSFORMERS_CACHE:-${CACHE_BASE}/huggingface}"
+mkdir -p "${HF_HOME}" "${HF_DATASETS_CACHE}" "${TRANSFORMERS_CACHE}"
 
 # H200 is SM 9.0 (Hopper). Required for megatron-core JIT compilation at import time.
 export TORCH_CUDA_ARCH_LIST="${TORCH_CUDA_ARCH_LIST:-9.0}"
