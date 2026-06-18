@@ -59,17 +59,27 @@ activate_runtime() {
     return 0
   fi
   if [[ -n "${CONDA_ENV_NAME:-bagen}" ]]; then
+    export PROJ_LIB="${PROJ_LIB:-}"
+    export PROJ_DATA="${PROJ_DATA:-}"
+    export _CONDA_SET_PROJ_LIB="${_CONDA_SET_PROJ_LIB:-}"
+    export _CONDA_SET_PROJ_DATA="${_CONDA_SET_PROJ_DATA:-}"
     if command -v conda >/dev/null 2>&1; then
       eval "$(conda shell.bash hook)"
+      set +u
       conda activate "${CONDA_ENV_NAME:-bagen}"
+      set -u
     elif [[ -n "${CONDA_BASE:-}" && -f "$CONDA_BASE/etc/profile.d/conda.sh" ]]; then
       # shellcheck disable=SC1090
       source "$CONDA_BASE/etc/profile.d/conda.sh"
+      set +u
       conda activate "${CONDA_ENV_NAME:-bagen}"
+      set -u
     elif [[ -f "/sw/external/python/anaconda3/etc/profile.d/conda.sh" ]]; then
       # shellcheck disable=SC1091
       source "/sw/external/python/anaconda3/etc/profile.d/conda.sh"
+      set +u
       conda activate "${CONDA_ENV_NAME:-bagen}"
+      set -u
     fi
   fi
 }
