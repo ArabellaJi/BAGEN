@@ -60,6 +60,7 @@ if [ "${SKIP_ENV_ACTIVATE:-0}" != "1" ]; then
   fi
 fi
 export PYTHONPATH="${PROJECT_ROOT}:${PROJECT_ROOT}/verl${PYTHONPATH:+:${PYTHONPATH}}"
+export TRANSFORMERS_ATTENTION_IMPLEMENTATION="${TRANSFORMERS_ATTENTION_IMPLEMENTATION:-eager}"
 if [[ "$PROJECT_ROOT" == /home/* ]]; then
   CACHE_BASE="/projects/p33224/cache"
 else
