@@ -60,6 +60,10 @@ if [ "${SKIP_ENV_ACTIVATE:-0}" != "1" ]; then
   fi
 fi
 export PYTHONPATH="${PROJECT_ROOT}:${PROJECT_ROOT}/verl${PYTHONPATH:+:${PYTHONPATH}}"
+export HF_HOME="${HF_HOME:-${PROJECT_ROOT}/../cache/huggingface}"
+export HF_DATASETS_CACHE="${HF_DATASETS_CACHE:-${PROJECT_ROOT}/../cache/datasets}"
+export TRANSFORMERS_CACHE="${TRANSFORMERS_CACHE:-${PROJECT_ROOT}/../cache/huggingface}"
+mkdir -p "${HF_HOME}" "${HF_DATASETS_CACHE}" "${TRANSFORMERS_CACHE}"
 
 if [ ! -f "${DATA_DIR}/train.parquet" ]; then
   echo "ERROR: ${DATA_DIR}/train.parquet not found." >&2
