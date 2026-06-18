@@ -40,8 +40,8 @@ if [ "${SKIP_ENV_ACTIVATE:-0}" != "1" ]; then
     export _CONDA_SET_PROJ_LIB="${_CONDA_SET_PROJ_LIB:-}"
     export _CONDA_SET_PROJ_DATA="${_CONDA_SET_PROJ_DATA:-}"
     if command -v conda >/dev/null 2>&1; then
-      eval "$(conda shell.bash hook)"
       set +u
+      eval "$(conda shell.bash hook)"
       conda activate "${CONDA_ENV_NAME:-bagen}"
       set -u
     elif [ -n "${CONDA_BASE:-}" ] && [ -f "${CONDA_BASE}/etc/profile.d/conda.sh" ]; then
