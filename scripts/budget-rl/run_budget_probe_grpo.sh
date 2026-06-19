@@ -75,6 +75,10 @@ LR=${LR:-1e-6}
 TOTAL_EPOCHS=${TOTAL_EPOCHS:-15}
 ROLLOUT_N=${ROLLOUT_N:-5}
 TP_SIZE=${TP_SIZE:-2}
+# Clamp TP_SIZE to available GPUs
+if [ "$TP_SIZE" -gt "$NGPUS" ]; then
+  TP_SIZE=$NGPUS
+fi
 TRAINER_LOGGER=${TRAINER_LOGGER:-'["console","wandb"]'}
 PROJECT_NAME=${PROJECT_NAME:-budget_probe_grpo}
 TRAIN_FILES="${DATA_DIR}/rl/train.parquet"
