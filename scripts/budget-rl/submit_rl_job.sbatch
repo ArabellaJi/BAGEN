@@ -57,9 +57,13 @@ export LEARNER_MODEL="${LEARNER_MODEL:-Qwen/Qwen2.5-3B}"
 export NGPUS="${NGPUS:-1}"
 export RL_PPO_MICRO_BS="${RL_PPO_MICRO_BS:-1}"
 export RL_LOGPROB_MICRO_BS="${RL_LOGPROB_MICRO_BS:-1}"
+# Reduced from defaults (n=16, batch=64) to cut per-step work ~8x for faster
+# iteration without flash_attn. n is the GRPO group size (must stay >=2).
+export RL_ROLLOUT_N="${RL_ROLLOUT_N:-8}"
+export RL_BATCH_SIZE="${RL_BATCH_SIZE:-16}"
 export STAGES="${STAGES:-rl}"
 
-echo "=== Launching pipeline: STAGES=${STAGES} LEARNER_MODEL=${LEARNER_MODEL} ==="
+echo "=== Launching pipeline: STAGES=${STAGES} LEARNER_MODEL=${LEARNER_MODEL} n=${RL_ROLLOUT_N} batch=${RL_BATCH_SIZE} ==="
 bash scripts/budget-rl/run_budget_rl_pipeline.sh
 
 echo "=== Job finished: $(date) ==="
