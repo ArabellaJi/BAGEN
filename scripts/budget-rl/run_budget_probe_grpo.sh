@@ -81,6 +81,10 @@ if [ "$TP_SIZE" -gt "$NGPUS" ]; then
 fi
 TRAINER_LOGGER=${TRAINER_LOGGER:-'["console","wandb"]'}
 PROJECT_NAME=${PROJECT_NAME:-budget_probe_grpo}
+# use_remove_padding requires flash_attn (sequence packing + varlen attention).
+# Without flash_attn it must be False, otherwise attention crosses sequence
+# boundaries and produces wrong results. Default False; set True if flash_attn installed.
+USE_REMOVE_PADDING=${USE_REMOVE_PADDING:-False}
 TRAIN_FILES="${DATA_DIR}/rl/train.parquet"
 VAL_FILES="${DATA_DIR}/rl/test.parquet"
 
@@ -99,7 +103,7 @@ python3 -m verl.trainer.main_ppo \
     data.truncation='error' \
     actor_rollout_ref.model.path=${MODEL} \
     actor_rollout_ref.actor.optim.lr=${LR} \
-    actor_rollout_ref.model.use_remove_padding=True \
+    actor_rollout_ref.model.use_remove_padding=${USE_REMOVE_PADDING} \
     actor_rollout_ref.actor.ppo_mini_batch_size=64 \
     actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=8 \
     actor_rollout_ref.actor.use_kl_loss=True \
